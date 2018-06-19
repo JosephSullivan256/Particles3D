@@ -7,6 +7,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import java.nio.IntBuffer;
 
+import org.lwjgl.glfw.GLFWCursorPosCallbackI;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.system.MemoryStack;
@@ -74,9 +75,21 @@ public class Window {
 		glfwHideWindow(window);
 	}
 	
+	public void hideCursor() {
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+	
+	public void showCurosr() {
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+	
 	public void setCallback(GLFWKeyCallbackI callback) {
 		// Setup a key callback. It will be called every time a key is pressed, repeated or released.
 		glfwSetKeyCallback(window, callback);
+	}
+	
+	public void setCallback(GLFWCursorPosCallbackI callback) {
+		glfwSetCursorPosCallback(window, callback);
 	}
 	
 	public int getPixelWidth() {

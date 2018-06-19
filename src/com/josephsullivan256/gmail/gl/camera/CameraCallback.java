@@ -4,18 +4,31 @@ import static org.lwjgl.glfw.GLFW.*;
 
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 
+import com.josephsullivan256.gmail.gl.input.MouseDXCallback;
 import com.josephsullivan256.gmail.math.linalg.Vec2;
 import com.josephsullivan256.gmail.math.linalg.Vec3;
 
-public class CameraCallback implements GLFWKeyCallbackI {
+public class CameraCallback implements GLFWKeyCallbackI, MouseDXCallback {
 
 	private Camera c;
 	
 	private boolean w, a, s, d, space, shift;
 	private boolean up,down,left,right;
+	private float dx,dy;
 	
-	public CameraCallback(Camera c) {
+	private boolean useMouse;
+	
+	public static CameraCallback mouseRotationCallback(Camera c){
+		return new CameraCallback(c,true);
+	}
+	
+	public static CameraCallback keyRotationCallback(Camera c){
+		return new CameraCallback(c,true);
+	}
+	
+	private CameraCallback(Camera c, boolean useMouse) {
 		this.c = c;
+		this.useMouse = useMouse;
 		w=false;
 		a=false;
 		s=false;
@@ -27,6 +40,9 @@ public class CameraCallback implements GLFWKeyCallbackI {
 		down=false;
 		left=false;
 		right=false;
+		
+		this.dx = 0;
+		this.dy = 0;
 	}
 	
 	@Override
@@ -132,14 +148,25 @@ public class CameraCallback implements GLFWKeyCallbackI {
 	
 	public Vec2 getRotation() {
 		Vec2 r = Vec2.zero;
-		
-		if(up)r=r.plus(new Vec2(0,1));
-		if(down)r=r.plus(new Vec2(0,-1));
-		if(left)r=r.plus(new Vec2(1,0));
-		if(right)r=r.plus(new Vec2(-1,0));
-		
-		if(!r.equals(Vec2.zero)) r = r.normalized();
+		if(useMouse){
+			r = new Vec2(-dx,-dy).scaledBy(1f);
+			dx = 0;
+			dy = 0;
+		} else {
+			if(up)r=r.plus(new Vec2(0,1));
+			if(down)r=r.plus(new Vec2(0,-1));
+			if(left)r=r.plus(new Vec2(1,0));
+			if(right)r=r.plus(new Vec2(-1,0));
+			
+			if(!r.equals(Vec2.zero)) r = r.normalized();
+		}
 		
 		return r;
+	}
+
+	@Override
+	public void invoke(float dx, float dy) {
+		this.dx = dx;
+		this.dy = dy;
 	}
 }

@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 
-public class CollectionCallback implements GLFWKeyCallbackI {
+public class CollectionKeyCallback implements GLFWKeyCallbackI {
 	
 	private List<GLFWKeyCallbackI> callbacks;
 	
-	public CollectionCallback() {
+	public CollectionKeyCallback() {
 		callbacks = new ArrayList<GLFWKeyCallbackI>();
 	}
 	

@@ -17,7 +17,8 @@ import com.josephsullivan256.gmail.gl.VertexAttributes;
 import com.josephsullivan256.gmail.gl.Window;
 import com.josephsullivan256.gmail.gl.camera.Camera;
 import com.josephsullivan256.gmail.gl.camera.CameraCallback;
-import com.josephsullivan256.gmail.gl.input.CollectionCallback;
+import com.josephsullivan256.gmail.gl.input.CollectionCursorPosCallback;
+import com.josephsullivan256.gmail.gl.input.CollectionKeyCallback;
 import com.josephsullivan256.gmail.math.linalg.Matrix;
 import com.josephsullivan256.gmail.math.linalg.Vec2;
 import com.josephsullivan256.gmail.math.linalg.Vec3;
@@ -35,12 +36,16 @@ public class Main {
 		
 		Utils.initGLFW();
 		Window window = new Window("hello world",width,height);
-		CollectionCallback callback = new CollectionCallback();
+		window.hideCursor();
+		CollectionKeyCallback callback = new CollectionKeyCallback();
+		CollectionCursorPosCallback callback1 = new CollectionCursorPosCallback();
 		window.setCallback(callback);
+		window.setCallback(callback1);
 		
 		Camera camera = new Camera(new Vec3(0,0,-10));
-		CameraCallback cameraCallback = new CameraCallback(camera);
+		CameraCallback cameraCallback = CameraCallback.mouseRotationCallback(camera);
 		callback.addCallback(cameraCallback);
+		callback1.addCallback(cameraCallback);
 		
 		Utils.initGL();
 		
@@ -99,7 +104,7 @@ public class Main {
 			particlesToPositions(particles,positions);
 			//netRotate = rotate.times(netRotate);
 			camera.move(cameraCallback.getMovement().scaledBy(0.1f));
-			camera.rotate(cameraCallback.getRotation().scaledBy(0.01f));
+			camera.rotate(cameraCallback.getRotation().scaledBy(0.001f));
 			
 			window.swapBuffers();
 			Utils.pollGLFWEvents();
