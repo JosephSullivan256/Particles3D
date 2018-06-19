@@ -25,7 +25,7 @@ public class Particle {
 	}
 	
 	public void integrate(float t) {
-		vel = vel.scaledBy(0.98f);
+		//vel = vel.scaledBy(0.99f);
 		Vec3 oldVel = vel;
 		vel = vel.plus(accel.scaledBy(t));
 		pos = pos.plus(vel.plus(oldVel).scaledBy(t/2f));

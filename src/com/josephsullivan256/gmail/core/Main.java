@@ -70,12 +70,12 @@ public class Main {
 				}, GL15.GL_STATIC_DRAW),
 				new VertexAttributes().with(2, GL11.GL_FLOAT));
 		
-		List<Particle> particles = initParticles(100, new Vec3(0,0,0), new Vec3(10,10,10));
+		List<Particle> particles = initParticles(50, new Vec3(0,0,0), new Vec3(10,10,10));
 		particles.addAll(
-				initParticles(100,new Vec3(20,0,0), new Vec3(10,10,10))
+				initParticles(50,new Vec3(10,0,0), new Vec3(10,10,10))
 				);
 		ParticleInteraction p1 = new ParticleInteraction(1f, 2);
-		ParticleInteraction p2 = new ParticleInteraction(-0.0001f, 4);
+		ParticleInteraction p2 = new ParticleInteraction(-0.001f, 4);
 		float[] positions = new float[particles.size()*3];
 		particlesToPositions(particles,positions);
 		

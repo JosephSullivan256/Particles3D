@@ -1,5 +1,5 @@
 #version 330 core
-#define COUNT 200
+#define COUNT 100
 
 out vec4 FragColor;
 
@@ -108,7 +108,7 @@ void main()
 	
 	//if(brightness < 1) brightness = 0;
 	
-	FragColor = vec4(hsv2rgb(vec3(brightness,1.0,1.0)), 1.0);
+	FragColor = vec4(hsv2rgb(vec3(brightness/2.0,1.0,1.0)), 1.0);
     //FragColor = vec4(vec3(1.0,0.2,0.1)*brightness, 1.0);
     //FragColor = vec4(vec3(1.0,0.2,0.1)*brightnessFunction(brightness), 1.0);
 }
